@@ -1,6 +1,4 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include <random>
 #include <fstream>
 #include <vector>
@@ -8,8 +6,11 @@
 #include <sstream>
 #include <numeric>
 #include <algorithm>
+#include <cstdlib>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 int max_width = 50;
 
@@ -69,7 +70,7 @@ string format_quote(string quote) {
         words.erase(words.begin());
 
         if (!words.empty()) {
-            if (curr_str.size() + words[0].size() >= max_width + 1) {
+            if (curr_str.size() + words[0].size() >= max_width) {
                 lines.push_back(curr_str);
 
                 curr_str = " ";
@@ -91,11 +92,11 @@ string format_quote(string quote) {
 }
 
 int main() {
-    srand((unsigned) time(NULL));
+    srand(high_resolution_clock::now().time_since_epoch().count());
 
     string quote = get_quote();
     
-    max_width = min((int)quote.size(), max_width);
+    max_width = min((int)quote.size() + 2, max_width);
 
     cout << repeat('_', max_width) << endl;
 
