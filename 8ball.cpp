@@ -18,16 +18,6 @@ int randint(int min, int max) {
     return (rand() % max + min);
 }
 
-string repeat(char c, int count) {
-    string s;
-
-    for (int i = 0 ; i < count ; i++) {
-        s += c;
-    }
-
-    return s;
-}
-
 vector<string> split_string(string str) {
     istringstream iss(str);
     string s;
@@ -98,13 +88,13 @@ int main() {
     
     max_width = min((int)quote.size() + 2, max_width);
 
-    cout << repeat('_', max_width) << endl;
+    cout << string(max_width, '_') << endl;
 
     cout << format_quote(quote);
     
-    cout << repeat('-', max_width) << endl;
-    cout << repeat(' ', 4) << "\\" << endl;
-    cout << repeat(' ', 5) << "\\" << endl;
+    cout << string(max_width, '-') << endl;
+    cout << string(4, ' ') << "\\" << endl;
+    cout << string(5, ' ') << "\\" << endl;
 
     system("type 8ball.txt");
 }
