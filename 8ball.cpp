@@ -37,7 +37,7 @@ string get_quote() {
     GetModuleFileName(NULL, path, MAX_PATH);
     filesystem::current_path(filesystem::path(path).parent_path().string());
  
-    ifstream file(filesystem::path(path).parent_path().string() + "\\quotes.txt");
+    ifstream file("quotes.txt");
 
     if (!file.is_open()) {
         throw runtime_error("Could not open file");
