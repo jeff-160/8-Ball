@@ -8,6 +8,8 @@
 #include <sstream>
 #include <numeric>
 #include <algorithm>
+#include <filesystem>
+#include <windows.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -18,7 +20,7 @@ int randint(int min, int max) {
     return (rand() % max + min);
 }
 
-vector<string> split_string(string str) {
+vector<string> split_string(const string& str) {
     istringstream iss(str);
     string s;
     vector<string> v;
@@ -31,7 +33,11 @@ vector<string> split_string(string str) {
 }
 
 string get_quote() {
-    ifstream file("quotes.txt");
+    char path[MAX_PATH];
+    GetModuleFileName(NULL, path, MAX_PATH);
+    filesystem::current_path(filesystem::path(path).parent_path().string());
+ 
+    ifstream file(filesystem::path(path).parent_path().string() + "\\quotes.txt");
 
     if (!file.is_open()) {
         throw runtime_error("Could not open file");
@@ -49,7 +55,7 @@ string get_quote() {
     return lines[randint(0, lines.size() - 1)];
 }
 
-string format_quote(string quote) {
+string format_quote(const string& quote) {
     auto words = split_string(quote);
 
     vector<string> lines;
