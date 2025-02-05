@@ -12,7 +12,6 @@
 #include <windows.h>
 
 using namespace std;
-using namespace std::chrono;
 
 int max_width = 50;
 
@@ -82,7 +81,7 @@ string format_quote(const string& quote) {
 }
 
 int main() {
-    srand(high_resolution_clock::now().time_since_epoch().count());
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     string quote = get_quote();
     
