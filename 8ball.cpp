@@ -17,7 +17,7 @@ using namespace std::chrono;
 int max_width = 50;
 
 int randint(int min, int max) {
-    return (rand() % max + min);
+    return (rand() % (max - min + 1) + min);
 }
 
 vector<string> split_string(const string& str) {
@@ -56,7 +56,7 @@ string get_quote() {
 }
 
 string format_quote(const string& quote) {
-    auto words = split_string(quote);
+    vector<string> words = split_string(quote);
 
     vector<string> lines;
     string curr_str = " ";
@@ -78,13 +78,7 @@ string format_quote(const string& quote) {
         lines.push_back(curr_str);
     }
 
-    string fquote = "";
-    
-    for (auto line : lines) {
-        fquote += line + "\n";
-    }
-
-    return fquote;
+    return accumulate(lines.begin(), lines.end(), string(""), [](string a, string b){ return a + "\n" + b; });
 }
 
 int main() {
@@ -96,11 +90,10 @@ int main() {
 
     cout << string(max_width, '_') << endl;
 
-    cout << format_quote(quote);
+    cout << format_quote(quote) << endl;
     
     cout << string(max_width, '-') << endl;
-    cout << string(4, ' ') << "\\" << endl;
-    cout << string(5, ' ') << "\\" << endl;
+    cout << string(4, ' ') << "\\" << endl << string(5, ' ') << "\\" << endl;
 
     system("type 8ball.txt");
 }
